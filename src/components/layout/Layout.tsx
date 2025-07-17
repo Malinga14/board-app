@@ -6,7 +6,7 @@ import Sidebar from '../sidebar/Sidebar';
 import MainContentArea from '../main_content_area/MainContentArea';
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -33,7 +33,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           fixed md:relative z-30 md:z-auto
           transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
           md:translate-x-0 transition-transform duration-300 ease-in-out
-          w-64 md:w-64 lg:w-72 xl:w-80
+          w-56 md:w-56 lg:w-60 xl:w-64
           h-full md:h-auto
         `}>
           <Sidebar onClose={() => setIsSidebarOpen(false)} />

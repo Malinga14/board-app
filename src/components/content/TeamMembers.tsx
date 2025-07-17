@@ -69,7 +69,7 @@ const TeamMembers = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="h-full">
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>

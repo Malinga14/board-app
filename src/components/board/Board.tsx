@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, MoreHorizontal, MessageCircle, Paperclip, Calendar, Users, Eye } from 'lucide-react';
+import { Plus, MoreHorizontal, MessageCircle, Paperclip, Calendar, Users, Eye, PhoneCall } from 'lucide-react';
 
 interface Task {
   id: string;
@@ -13,6 +13,7 @@ interface Task {
   hasImage?: boolean;
   reports?: number;
   views?: number;
+  groupCall?: boolean;
 }
 
 interface Column {
@@ -35,7 +36,7 @@ const Board = () => {
           type: 'Research',
           priority: 'medium',
           assignees: 2,
-          comments: 3,
+          comments: 2,
           attachments: 0,
           dueDate: 'Tomorrow'
         },
@@ -46,7 +47,7 @@ const Board = () => {
           priority: 'high',
           assignees: 2,
           comments: 8,
-          attachments: 0,
+          attachments: 3,
           reports: 2
         },
         {
@@ -56,7 +57,7 @@ const Board = () => {
           priority: 'low',
           assignees: 2,
           comments: 3,
-          attachments: 0
+          attachments: 1
         },
         {
           id: '4',
@@ -73,7 +74,7 @@ const Board = () => {
     {
       id: 'progress',
       title: 'In Progress',
-      color: 'bg-blue-100',
+      color: 'bg-orange-400',
       tasks: [
         {
           id: '5',
@@ -82,7 +83,7 @@ const Board = () => {
           priority: 'high',
           assignees: 2,
           comments: 2,
-          attachments: 0,
+          attachments: 2,
           dueDate: 'Tomorrow'
         },
         {
@@ -90,8 +91,8 @@ const Board = () => {
           title: 'Check Clients Feedback',
           type: 'Feedback',
           priority: 'medium',
-          assignees: 2,
-          comments: 5,
+          assignees: 4,
+          comments: 8,
           attachments: 0,
           hasImage: true,
           dueDate: '22 April, 2022'
@@ -101,8 +102,8 @@ const Board = () => {
           title: 'Copyright',
           type: 'Development',
           priority: 'low',
-          assignees: 2,
-          comments: 0,
+          assignees: 1,
+          comments: 4,
           attachments: 0,
           dueDate: '22 April, 2022'
         },
@@ -112,7 +113,7 @@ const Board = () => {
           type: 'UX Research',
           priority: 'medium',
           assignees: 2,
-          comments: 4,
+          comments: 0,
           attachments: 0,
           dueDate: '22 April, 2022'
         }
@@ -121,7 +122,7 @@ const Board = () => {
     {
       id: 'approved',
       title: 'Approved',
-      color: 'bg-green-100',
+      color: 'bg-green-500',
       tasks: [
         {
           id: '9',
@@ -139,8 +140,8 @@ const Board = () => {
           type: 'Design',
           priority: 'medium',
           assignees: 2,
-          comments: 0,
-          attachments: 0,
+          comments: 28,
+          attachments: 6,
           hasImage: true
         },
         {
@@ -148,7 +149,7 @@ const Board = () => {
           title: 'Animation preloaders',
           type: 'Interface',
           priority: 'low',
-          assignees: 2,
+          assignees: 1,
           comments: 9,
           attachments: 4
         },
@@ -157,35 +158,36 @@ const Board = () => {
           title: 'Sorting category',
           type: 'UX Research',
           priority: 'medium',
-          assignees: 2,
-          comments: 9,
-          attachments: 4
+          assignees: 3,
+          comments: 0,
+          attachments: 0
         }
       ]
     },
     {
       id: 'reject',
       title: 'Reject',
-      color: 'bg-red-100',
+      color: 'bg-red-500',
       tasks: [
         {
           id: '13',
           title: 'Group Management',
           type: 'Other',
           priority: 'high',
-          assignees: 2,
+          assignees: 1,
           comments: 329,
           attachments: 0,
-          views: 0
+          views: 0,
+          groupCall: true
         },
         {
           id: '14',
           title: 'Design System',
           type: 'Design',
           priority: 'medium',
-          assignees: 2,
+          assignees: 1,
           comments: 8,
-          attachments: 0,
+          attachments: 3,
           reports: 2
         },
         {
@@ -214,7 +216,7 @@ const Board = () => {
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'Research':
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-green-100 text-green-700';
       case 'Design':
         return 'bg-red-100 text-red-700';
       case 'Development':
@@ -225,6 +227,8 @@ const Board = () => {
         return 'bg-orange-100 text-orange-700';
       case 'Interface':
         return 'bg-blue-100 text-blue-700';
+      case 'Other':
+        return 'bg-gray-100 text-gray-700';
       default:
         return 'bg-gray-100 text-gray-700';
     }
@@ -234,7 +238,7 @@ const Board = () => {
     <div className="w-full h-full overflow-hidden">
       {/* Mobile View */}
       <div className="md:hidden h-full overflow-y-auto">
-        <div className="space-y-6 p-4">
+        <div className="space-y-6">
           {columns.map((column) => (
             <div key={column.id} className="w-full">
               <div className="flex items-center justify-between mb-4">
@@ -322,82 +326,101 @@ const Board = () => {
       </div>
 
       {/* Desktop View */}
-      <div className="hidden md:flex space-x-4 lg:space-x-6 h-full overflow-x-auto px-4 lg:px-6">
+      <div className="hidden md:flex space-x-4 h-full overflow-hidden">
         {columns.map((column) => (
-          <div key={column.id} className="flex-shrink-0 w-72 lg:w-80">
+          <div key={column.id} className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-medium text-gray-900">{column.title}</h3>
-              <div className="flex items-center space-x-2">
-                <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
+              <div className="flex items-center space-x-3">
+                <h3 className="font-semibold text-gray-900 text-sm">{column.title}</h3>
+                <span className={`px-3 py-1 rounded-full text-white text-xs font-medium ${column.color}`}>
                   {column.tasks.length}
                 </span>
+              </div>
+              <div className="flex items-center space-x-1">
                 <button className="text-gray-400 hover:text-gray-600 p-1">
-                  <Plus className="w-5 h-5" />
+                  <Plus className="w-4 h-4" />
                 </button>
                 <button className="text-gray-400 hover:text-gray-600 p-1">
-                  <MoreHorizontal className="w-5 h-5" />
+                  <MoreHorizontal className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             <div className="space-y-3 overflow-y-auto max-h-full pb-4">
               {column.tasks.map((task) => (
-                <div key={task.id} className="bg-white rounded-lg p-4 border border-gray-200 hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between mb-2">
-                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(task.type)}`}>
+                <div key={task.id} className="bg-white rounded-xl p-4 border border-gray-100 hover:shadow-lg transition-all duration-200 hover:border-gray-200">
+                  <div className="flex items-start justify-between mb-3">
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${getTypeColor(task.type)}`}>
                       {task.type}
                     </span>
-                    <button className="text-gray-400 hover:text-gray-600 p-1">
+                    <button className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100">
                       <MoreHorizontal className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <h4 className="font-medium text-gray-900 mb-3">{task.title}</h4>
+                  <h4 className="font-semibold text-gray-900 mb-3 text-sm leading-tight">{task.title}</h4>
 
                   {task.hasImage && (
-                    <div className="bg-gray-100 rounded-lg h-20 mb-3 flex items-center justify-center">
-                      <div className="w-8 h-8 bg-gray-300 rounded"></div>
+                    <div className="bg-gray-800 rounded-lg h-20 mb-4 flex items-center justify-center relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900"></div>
+                      <div className="relative w-8 h-8 bg-white bg-opacity-20 rounded border border-white border-opacity-30 flex items-center justify-center">
+                        <div className="w-4 h-4 bg-white bg-opacity-60 rounded"></div>
+                      </div>
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between text-sm text-gray-500">
+                  {/* Bottom section with icons and stats */}
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       {task.attachments > 0 && (
-                        <div className="flex items-center space-x-1">
-                          <Paperclip className="w-4 h-4" />
-                          <span>{task.attachments}</span>
+                        <div className="flex items-center space-x-1 text-gray-500">
+                          <Paperclip className="w-3.5 h-3.5" />
+                          <span className="text-xs font-medium">{task.attachments}</span>
                         </div>
                       )}
                       {task.comments > 0 && (
-                        <div className="flex items-center space-x-1">
-                          <MessageCircle className="w-4 h-4" />
-                          <span>{task.comments}</span>
+                        <div className="flex items-center space-x-1 text-gray-500">
+                          <MessageCircle className="w-3.5 h-3.5" />
+                          <span className="text-xs font-medium">{task.comments}</span>
                         </div>
                       )}
-                      {task.views !== undefined && (
-                        <div className="flex items-center space-x-1">
-                          <Eye className="w-4 h-4" />
-                          <span>{task.views}</span>
+                      {task.views !== undefined && task.views >= 0 && (
+                        <div className="flex items-center space-x-1 text-gray-500">
+                          <Eye className="w-3.5 h-3.5" />
+                          <span className="text-xs font-medium">{task.views}</span>
+                        </div>
+                      )}
+                      {task.groupCall && (
+                        <div className="flex items-center space-x-1 text-blue-500">
+                          <PhoneCall className="w-3.5 h-3.5" />
+                          <span className="text-xs font-medium">Group Call</span>
                         </div>
                       )}
                       {task.reports && (
                         <div className="flex items-center space-x-1 text-red-500">
-                          <span>{task.reports} Reports</span>
+                          <span className="text-xs font-medium">{task.reports} Reports</span>
                         </div>
                       )}
                     </div>
 
                     <div className="flex items-center space-x-2">
                       {task.dueDate && (
-                        <div className="flex items-center space-x-1">
-                          <Calendar className="w-4 h-4" />
-                          <span className="text-xs">{task.dueDate}</span>
+                        <div className="flex items-center space-x-1 text-gray-500">
+                          <Calendar className="w-3.5 h-3.5" />
+                          <span className="text-xs font-medium">{task.dueDate}</span>
                         </div>
                       )}
                       <div className="flex -space-x-1">
-                        {Array.from({ length: task.assignees }).map((_, i) => (
-                          <div key={i} className="w-6 h-6 bg-gray-400 rounded-full border-2 border-white"></div>
+                        {Array.from({ length: Math.min(task.assignees, 3) }).map((_, i) => (
+                          <div key={i} className="w-6 h-6 bg-gradient-to-br from-gray-400 to-gray-500 rounded-full border-2 border-white flex items-center justify-center">
+                            <span className="text-white text-xs font-semibold">{i + 1}</span>
+                          </div>
                         ))}
+                        {task.assignees > 3 && (
+                          <div className="w-6 h-6 bg-gray-600 rounded-full border-2 border-white flex items-center justify-center">
+                            <span className="text-white text-xs font-semibold">+{task.assignees - 3}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

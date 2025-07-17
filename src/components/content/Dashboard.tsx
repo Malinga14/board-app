@@ -3,7 +3,7 @@ import { BarChart3, TrendingUp, Users, Calendar, CheckCircle, Clock } from 'luci
 
 const Dashboard = () => {
   return (
-    <div className="p-6">
+    <div className="h-full">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Dashboard</h1>
         <p className="text-gray-600">Overview of your workspace activity</p>

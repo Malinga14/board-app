@@ -43,7 +43,7 @@ const Support = () => {
   ];
 
   return (
-    <div className="p-6">
+    <div className="h-full">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Support & Help</h1>
         <p className="text-gray-600">Get help and find answers to common questions</p>

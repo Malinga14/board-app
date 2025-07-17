@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="w-64 md:w-64 lg:w-72 xl:w-80 bg-white flex flex-col h-full border-r border-gray-200">
+    <div className="w-56 md:w-56 lg:w-60 xl:w-64 bg-white flex flex-col h-full border-r border-gray-200">
       {/* Mobile Close Button */}
       <div className="md:hidden flex justify-end p-4 border-b border-gray-200">
         <button 
@@ -77,16 +77,27 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       <nav className="flex-1 px-3 md:px-4 py-2 overflow-y-auto">
         <ul className="space-y-1">
           <li>
-            <a href="#" className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md text-sm md:text-base transition-colors">
+            <button 
+              onClick={() => handleNavigation('dashboard')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 text-left rounded-md text-sm md:text-base transition-colors ${
+                activeContent === 'dashboard' 
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-600 hover:bg-gray-50'
+              }`}
+            >
               <LayoutDashboard className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
               <span className="truncate">Dashboard</span>
-            </a>
+            </button>
           </li>
           
           <li>
             <div 
               onClick={toggleBoards}
-              className="flex items-center space-x-3 px-3 py-2 text-blue-600 bg-blue-50 rounded-md cursor-pointer text-sm md:text-base transition-colors"
+              className={`flex items-center space-x-3 px-3 py-2 rounded-md cursor-pointer text-sm md:text-base transition-colors ${
+                activeContent === 'boards' 
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-600 hover:bg-gray-50'
+              }`}
             >
               <Folder className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
               <span className="flex-1 truncate">Boards</span>
@@ -101,28 +112,56 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
               <div className="mt-3 border border-gray-200 rounded-md">
                 <ul className="py-2 space-y-1">
                   <li>
-                    <a href="#" className="flex items-center px-3 py-2 text-sm md:text-base text-gray-500 hover:text-gray-700 transition-colors">
+                    <button 
+                      onClick={() => handleBoardSelect('create-routes')}
+                      className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
+                        activeBoardId === 'create-routes' 
+                          ? 'text-blue-600 font-medium' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
                       <ChevronRight className="w-3 h-3 md:w-4 md:h-4 mr-2 text-gray-300 flex-shrink-0" />
                       <span className="truncate">Create routes</span>
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a href="#" className="flex items-center px-3 py-2 text-sm md:text-base text-gray-500 hover:text-gray-700 transition-colors">
+                    <button 
+                      onClick={() => handleBoardSelect('development-react-app')}
+                      className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
+                        activeBoardId === 'development-react-app' 
+                          ? 'text-blue-600 font-medium' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
                       <ChevronRight className="w-3 h-3 md:w-4 md:h-4 mr-2 text-gray-300 flex-shrink-0" />
-                      <span className="truncate">Delepment React App</span>
-                    </a>
+                      <span className="truncate">Development React App</span>
+                    </button>
                   </li>
                   <li>
-                    <a href="#" className="flex items-center px-3 py-2 text-sm md:text-base text-blue-600 font-medium transition-colors">
+                    <button 
+                      onClick={() => handleBoardSelect('sport-xi-project')}
+                      className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
+                        activeBoardId === 'sport-xi-project' 
+                          ? 'text-blue-600 font-medium' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
                       <ChevronRight className="w-3 h-3 md:w-4 md:h-4 mr-2 text-blue-500 flex-shrink-0" />
                       <span className="truncate">Sport Xi Project</span>
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a href="#" className="flex items-center px-3 py-2 text-sm md:text-base text-gray-500 hover:text-gray-700 transition-colors">
+                    <button 
+                      onClick={() => handleBoardSelect('wordpress-theme')}
+                      className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
+                        activeBoardId === 'wordpress-theme' 
+                          ? 'text-blue-600 font-medium' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
                       <ChevronRight className="w-3 h-3 md:w-4 md:h-4 mr-2 text-gray-300 flex-shrink-0" />
                       <span className="truncate">Wordpress theme</span>
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -130,37 +169,65 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
           </li>
 
           <li>
-            <a href="#" className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md text-sm md:text-base transition-colors">
+            <button 
+              onClick={() => handleNavigation('messages')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 text-left rounded-md text-sm md:text-base transition-colors ${
+                activeContent === 'messages' 
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-600 hover:bg-gray-50'
+              }`}
+            >
               <MessageCircle className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
               <span className="flex-1 truncate">Messages</span>
               <span className="bg-orange-500 text-white text-xs md:text-sm rounded-full w-5 h-5 md:w-6 md:h-6 flex items-center justify-center font-medium flex-shrink-0">
                 3
               </span>
-            </a>
+            </button>
           </li>
 
           <li>
-            <a href="#" className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md text-sm md:text-base transition-colors">
+            <button 
+              onClick={() => handleNavigation('calendar')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 text-left rounded-md text-sm md:text-base transition-colors ${
+                activeContent === 'calendar' 
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-600 hover:bg-gray-50'
+              }`}
+            >
               <Calendar className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
               <span className="truncate">Calendar</span>
-            </a>
+            </button>
           </li>
 
           <li>
-            <a href="#" className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md text-sm md:text-base transition-colors">
+            <button 
+              onClick={() => handleNavigation('team-members')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 text-left rounded-md text-sm md:text-base transition-colors ${
+                activeContent === 'team-members' 
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-600 hover:bg-gray-50'
+              }`}
+            >
               <Users className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
               <span className="truncate">Team members</span>
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
 
       {/* Bottom Section - Support and Logout */}
       <div className="p-3 md:p-4 space-y-2 border-t border-gray-200">
-        <a href="#" className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md text-sm md:text-base transition-colors">
+        <button 
+          onClick={() => handleNavigation('support')}
+          className={`w-full flex items-center space-x-3 px-3 py-2 text-left rounded-md text-sm md:text-base transition-colors ${
+            activeContent === 'support' 
+              ? 'text-blue-600 bg-blue-50' 
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
           <HelpCircle className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
           <span className="truncate">Support</span>
-        </a>
+        </button>
         
         <button className="flex items-center space-x-3 px-3 py-2 bg-gray-700 text-white rounded-lg w-full text-sm md:text-base hover:bg-gray-800 transition-colors">
           <LogOut className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
