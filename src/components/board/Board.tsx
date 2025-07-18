@@ -14,7 +14,7 @@ import boardData from '../../data/boardData.json';
 import users from '../../data/users.json';
 
 const Board: React.FC = () => {
-  const { currentBoard, refreshBoards } = useAppStore();
+  const { currentBoard, refreshBoards, searchQuery } = useAppStore();
   const [columns, setColumns] = useState<Column[]>([]);
   const [project, setProject] = useState<any>(null);
   const [draggedTask, setDraggedTask] = useState<{taskId: string, sourceColumnId: string} | null>(null);
@@ -39,6 +39,16 @@ const Board: React.FC = () => {
       setProject(boardData.board);
     }
   }, [currentBoard]);
+
+  // Simple search filter function
+  const filterTasks = (tasks: Task[]) => {
+    if (!searchQuery) return tasks;
+    
+    return tasks.filter(task => 
+      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.type.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
 
   const handleAddTask = (columnId: string) => {
     const column = columns.find(col => col.id === columnId);
@@ -362,7 +372,7 @@ const Board: React.FC = () => {
               />
 
               <div className="space-y-3">
-                {column.tasks.map((task) => (
+                {filterTasks(column.tasks).map((task) => (
                   <TaskCard
                     key={task.id}
                     task={task}
@@ -414,7 +424,7 @@ const Board: React.FC = () => {
                   onDrop={() => handleDrop(column.id)}
                 >
                   <div className="space-y-3 min-h-64">
-                    {column.tasks.map((task) => (
+                    {filterTasks(column.tasks).map((task) => (
                       <TaskCard
                         key={task.id}
                         task={task}

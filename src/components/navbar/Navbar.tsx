@@ -8,7 +8,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
-  const { createBoard } = useAppStore();
+  const { createBoard, searchQuery, setSearchQuery } = useAppStore();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   
   // This would typically come from your state management or props
@@ -48,6 +48,8 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             <input
               type="text"
               placeholder="Search tasks..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-64 pl-10 pr-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 placeholder-gray-500"
             />
           </div>

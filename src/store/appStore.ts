@@ -8,6 +8,10 @@ interface AppState {
   activeContent: ContentType;
   setActiveContent: (content: ContentType) => void;
   
+  // Search State
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  
   // Board State
   activeBoardId: string;
   setActiveBoardId: (boardId: string) => void;
@@ -23,12 +27,14 @@ interface AppState {
 export const useAppStore = create<AppState>((set, get) => ({
   // Initial State
   activeContent: 'boards',
+  searchQuery: '',
   activeBoardId: '',
   boards: [],
   currentBoard: null,
 
   // UI Actions
   setActiveContent: (content: ContentType) => set({ activeContent: content }),
+  setSearchQuery: (query: string) => set({ searchQuery: query }),
 
   // Board Actions
   setActiveBoardId: (boardId: string) => {
