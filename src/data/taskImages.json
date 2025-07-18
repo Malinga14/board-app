@@ -1,0 +1,36 @@
+{
+  "taskImages": {
+    "task-1": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop",
+    "task-2": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop",
+    "task-3": "https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=400&h=200&fit=crop",
+    "task-4": "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=200&fit=crop"
+  },
+  "defaultImage": "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&h=200&fit=crop",
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith", 
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b9e87f52?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      "id": "3",
+      "name": "Mike Johnson",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      "id": "4",
+      "name": "Sarah Wilson",
+      "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face"
+    },
+    {
+      "id": "5",
+      "name": "David Brown",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face"
+    }
+  ]
+}

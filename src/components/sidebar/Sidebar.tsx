@@ -22,7 +22,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   const [isBoardsOpen, setIsBoardsOpen] = useState(true);
-  const { activeContent, setActiveContent, activeBoardId, setActiveBoardId } = useAppContext();
+  const { activeContent, setActiveContent, activeBoardId, setActiveBoardId, boards } = useAppContext();
 
   const toggleBoards = () => {
     setIsBoardsOpen(!isBoardsOpen);
@@ -111,58 +111,29 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
             {isBoardsOpen && (
               <div className="mt-3 border border-gray-200 rounded-md">
                 <ul className="py-2 space-y-1">
-                  <li>
-                    <button 
-                      onClick={() => handleBoardSelect('create-routes')}
-                      className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
-                        activeBoardId === 'create-routes' 
-                          ? 'text-blue-600 font-medium' 
-                          : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 mr-2 text-gray-300 flex-shrink-0" />
-                      <span className="truncate">Create routes</span>
-                    </button>
-                  </li>
-                  <li>
-                    <button 
-                      onClick={() => handleBoardSelect('development-react-app')}
-                      className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
-                        activeBoardId === 'development-react-app' 
-                          ? 'text-blue-600 font-medium' 
-                          : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 mr-2 text-gray-300 flex-shrink-0" />
-                      <span className="truncate">Development React App</span>
-                    </button>
-                  </li>
-                  <li>
-                    <button 
-                      onClick={() => handleBoardSelect('sport-xi-project')}
-                      className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
-                        activeBoardId === 'sport-xi-project' 
-                          ? 'text-blue-600 font-medium' 
-                          : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 mr-2 text-blue-500 flex-shrink-0" />
-                      <span className="truncate">Sport Xi Project</span>
-                    </button>
-                  </li>
-                  <li>
-                    <button 
-                      onClick={() => handleBoardSelect('wordpress-theme')}
-                      className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
-                        activeBoardId === 'wordpress-theme' 
-                          ? 'text-blue-600 font-medium' 
-                          : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 mr-2 text-gray-300 flex-shrink-0" />
-                      <span className="truncate">Wordpress theme</span>
-                    </button>
-                  </li>
+                  {boards.length > 0 ? (
+                    boards.map((board) => (
+                      <li key={board.id}>
+                        <button 
+                          onClick={() => handleBoardSelect(board.id)}
+                          className={`w-full flex items-center px-3 py-2 text-sm md:text-base text-left transition-colors ${
+                            activeBoardId === board.id 
+                              ? 'text-blue-600 font-medium' 
+                              : 'text-gray-500 hover:text-gray-700'
+                          }`}
+                        >
+                          <ChevronRight className={`w-3 h-3 md:w-4 md:h-4 mr-2 flex-shrink-0 ${
+                            activeBoardId === board.id ? 'text-blue-500' : 'text-gray-300'
+                          }`} />
+                          <span className="truncate">{board.title}</span>
+                        </button>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="px-3 py-2 text-sm text-gray-400">
+                      No boards available
+                    </li>
+                  )}
                 </ul>
               </div>
             )}

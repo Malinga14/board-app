@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, Plus, Image, Bell, SlidersHorizontal, Menu } from 'lucide-react';
+import { useAppContext } from '../../contexts/AppContext';
+import CreateBoardModal from '../ui/CreateBoardModal';
 
 interface NavbarProps {
   onMenuClick?: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
+  const { createBoard } = useAppContext();
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  
   // This would typically come from your state management or props
   const hasUnreadNotifications = true; // Set to false to hide the dot
+
+  const handleCreateBoard = (title: string, description: string, assignedUsers: any[]) => {
+    createBoard(title, description, assignedUsers);
+    setIsCreateModalOpen(false);
+  };
 
   return (
     <nav className="w-full bg-white border-b border-gray-200 px-4 py-4">
@@ -24,7 +34,10 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
 
         {/* Right side - Create button, search bar, notification icons and user profile */}
         <div className="flex items-center space-x-3">
-          <button className="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+          <button 
+            onClick={() => setIsCreateModalOpen(true)}
+            className="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+          >
             <Plus className="w-4 h-4" />
             <span>Create new board</span>
           </button>
@@ -57,6 +70,13 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
           </div>
         </div>
       </div>
+      
+      {/* Create Board Modal */}
+      <CreateBoardModal 
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreateBoard={handleCreateBoard}
+      />
     </nav>
   );
 };

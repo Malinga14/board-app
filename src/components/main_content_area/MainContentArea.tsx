@@ -87,7 +87,7 @@ const MainContentArea: React.FC<MainContentAreaProps> = ({ children }) => {
   return (
     <div className="flex-1 bg-gray-50 overflow-hidden flex flex-col h-full">
       {/* Main Content */}
-      <div className={`${activeContent === 'boards' ? 'p-3 md:p-6' : activeContent === 'messages' ? '' : 'p-3 md:p-6'} flex-1 flex flex-col min-h-0`}>
+      <div className={`${activeContent === 'boards' ? '' : activeContent === 'messages' ? '' : 'p-3 md:p-6'} flex-1 flex flex-col min-h-0`}>
         <div className="flex-1 overflow-hidden">
           {children || renderContent()}
         </div>
