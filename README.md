@@ -5,18 +5,19 @@ A professional kanban board application built with **Next.js 15**, **TypeScript*
 ## 🚀 Features
 
 ### Core Functionality
-- **Kanban Board**: Visual task management with swimlanes (To Do, In Progress, Approved, Rejected)
-- **Drag & Drop**: Seamless task movement between columns using `react-beautiful-dnd`
-- **Real-time Search**: Dynamic task filtering with debounced search
-- **State Management**: Robust state handling with Zustand and localStorage persistence
-- **Responsive Design**: Mobile-first approach with responsive layouts
+- **Kanban Board**: Visual task management with 4 columns (To Do, In Progress, Approved, Rejected)
+- **Task Management**: Full CRUD operations - Create, Read, Update, Delete tasks
+- **Real-time Search**: Dynamic task filtering as you type across task titles and types
+- **State Management**: Zustand store with localStorage persistence for data retention
+- **Responsive Design**: Industry-standard mobile-first design with separate mobile/desktop layouts
+- **Board Management**: Create and manage multiple project boards
 
 ### Technical Features
 - **TypeScript**: Full type safety with comprehensive interfaces
-- **Clean Architecture**: Separation of concerns with organized folder structure
-- **Professional UI**: Pixel-perfect design matching the provided mockups
-- **Error Handling**: Comprehensive error boundaries and loading states
-- **Performance**: Optimized with React best practices and efficient re-renders
+- **Clean Architecture**: Organized component structure with separation of concerns
+- **Professional UI**: Clean, modern design with responsive navigation
+- **Mobile Optimization**: Separate mobile navbar with hamburger menu and overlay sidebar
+- **Performance**: Efficient state management and optimized re-renders
 
 ## 🛠️ Tech Stack
 
@@ -24,7 +25,6 @@ A professional kanban board application built with **Next.js 15**, **TypeScript*
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **State Management**: Zustand
-- **Drag & Drop**: react-beautiful-dnd
 - **Icons**: Lucide React
 - **Package Manager**: npm
 
@@ -38,7 +38,7 @@ cd board-app
 
 2. Install dependencies:
 ```bash
-npm install --legacy-peer-deps
+npm install
 ```
 
 3. Run the development server:
@@ -63,7 +63,16 @@ src/
 │   ├── layout/           # Layout components
 │   │   ├── Header.tsx    # Navigation header
 │   │   ├── Layout.tsx    # Main layout wrapper
-│   │   └── Sidebar.tsx   # Navigation sidebar
+│   ├── main_content_area/ # Main content wrapper
+│   │   └── MainContentArea.tsx
+│   ├── navbar/           # Navigation components
+│   │   ├── Navbar.tsx    # Responsive navbar
+│   │   ├── Logo.tsx      # Application logo
+│   │   ├── SearchBar.tsx # Search functionality
+│   │   ├── UserProfile.tsx # User profile display
+│   │   └── CreateBoardButton.tsx # Board creation
+│   ├── sidebar/          # Navigation sidebar
+│   │   └── Sidebar.tsx   # Project navigation
 │   └── ui/               # Reusable UI components
 │       ├── SearchBar.tsx # Search functionality
 │       └── UserAvatar.tsx # User avatar display
@@ -81,73 +90,84 @@ src/
 ## 🎨 Design Implementation
 
 ### UI Components
-- **Header**: Blue header with logo, search bar, and user profile
-- **Sidebar**: Navigation with project information and menu items
-- **Task Cards**: Detailed cards with assignees, due dates, and status indicators
-- **Swimlanes**: Color-coded columns for different task statuses
+- **Navbar**: Responsive navigation with separate mobile/desktop designs
+- **Mobile Navbar**: Two-row layout with hamburger menu and full-width search
+- **Desktop Navbar**: Single-row layout with integrated search and user profile
+- **Sidebar**: Collapsible navigation with project information and menu items
+- **Task Cards**: Detailed cards with assignees, due dates, and priority indicators
+- **Columns**: Color-coded swimlanes for different task statuses
 
 ### Responsive Design
-- Mobile-first approach
-- Responsive breakpoints at 768px and above
-- Collapsible sidebar for mobile devices
-- Optimized touch interactions
+- **Mobile-First**: Optimized for screens below 768px
+- **Breakpoint Strategy**: Uses md: breakpoint (768px) for desktop layouts
+- **Adaptive Components**: Different layouts for mobile and desktop views
+- **Touch-Friendly**: Optimized interactions for mobile devices
+- **Overlay System**: Mobile sidebar with proper z-index management
 
 ## 📊 State Management
 
 ### Zustand Store Features
-- **Task Management**: CRUD operations for tasks
-- **Search & Filtering**: Real-time task filtering
-- **Drag & Drop**: Task movement between columns
-- **Persistence**: localStorage integration for data persistence
-- **Loading States**: Proper loading and error handling
+- **Task Management**: Complete CRUD operations for tasks
+- **Board Management**: Create and switch between multiple boards
+- **Search & Filtering**: Real-time task filtering by title and type
+- **User Management**: Handle user assignments and profiles
+- **Persistence**: localStorage integration for data retention across sessions
+- **State Synchronization**: Automatic save/load functionality
 
 ### Store Structure
 ```typescript
 interface TaskStore {
   tasks: Task[];
-  columns: Column[];
+  boards: Board[];
+  currentBoard: string;
   users: User[];
-  searchFilters: SearchFilters;
+  searchQuery: string;
   isLoading: boolean;
   error: string | null;
-  // ... actions
+  // Actions
+  addTask: (task: Omit<Task, 'id'>) => void;
+  updateTask: (id: string, updates: Partial<Task>) => void;
+  deleteTask: (id: string) => void;
+  setSearchQuery: (query: string) => void;
+  createBoard: (board: Omit<Board, 'id'>) => void;
+  setCurrentBoard: (boardId: string) => void;
 }
 ```
 
 ## 🔧 Key Features Explained
 
-### 1. Drag & Drop Functionality
-- Uses `react-beautiful-dnd` for smooth drag interactions
-- Visual feedback during drag operations
-- Proper state updates when tasks are moved
-- Handles edge cases and error states
+### 1. Responsive Navigation System
+- **Mobile Design**: Dedicated mobile navbar with hamburger menu
+- **Desktop Design**: Full-featured navbar with integrated search
+- **Smooth Transitions**: Proper sidebar overlay with z-index management
+- **Touch Optimization**: Mobile-friendly interaction patterns
 
 ### 2. Search Implementation
-- Debounced search for performance
-- Searches across task titles, descriptions, and tags
-- Real-time filtering without page reloads
-- Proper state management for search queries
+- **Real-time Filtering**: Instant task filtering as you type
+- **Multi-field Search**: Searches across task titles and types
+- **State Integration**: Connected to Zustand store for global access
+- **Performance**: Efficient filtering without unnecessary re-renders
 
-### 3. Data Persistence
-- localStorage integration for data persistence
-- Automatic save/load functionality
-- Error handling for storage operations
-- SSR-safe implementation
+### 3. Task Management System
+- **CRUD Operations**: Complete Create, Read, Update, Delete functionality
+- **Board Organization**: Multiple boards with easy switching
+- **User Assignment**: Assign tasks to team members
+- **Status Tracking**: Visual status indicators and column organization
 
-### 4. TypeScript Integration
-- Comprehensive type definitions
-- Proper interface design
-- Type-safe state management
-- IntelliSense support throughout
+### 4. Data Persistence
+- **localStorage Integration**: Automatic data saving and loading
+- **Session Persistence**: Data retained across browser sessions
+- **Error Handling**: Graceful handling of storage operations
+- **SSR-Safe**: Compatible with Next.js server-side rendering
 
 ## 🎯 Code Quality
 
 ### Best Practices Implemented
-- **Clean Code**: Readable, maintainable code structure
-- **Error Handling**: Comprehensive error boundaries
+- **Clean Code**: Readable, maintainable component structure
+- **Responsive Design**: Industry-standard mobile-first approach
 - **Performance**: Optimized re-renders and efficient state updates
-- **Accessibility**: Proper ARIA labels and keyboard navigation
-- **Documentation**: Extensive code comments and documentation
+- **TypeScript**: Comprehensive type safety throughout the application
+- **Component Organization**: Logical separation of concerns and reusability
 
 ### Code Organization
 - Separation of concerns
@@ -186,25 +206,34 @@ The application is ready for deployment to platforms like:
 ## 🔮 Future Enhancements
 
 Potential improvements and features:
-- Real-time collaboration
-- Task assignments and notifications
-- Advanced filtering and sorting
-- Calendar integration
-- File attachments
-- Comments and mentions
-- Dark mode support
-- PWA capabilities
+- **Drag & Drop**: Task movement between columns with react-beautiful-dnd
+- **Real-time Collaboration**: Multi-user editing and updates
+- **Advanced Filtering**: Filter by assignee, due date, priority
+- **Task Dependencies**: Link related tasks and prerequisites
+- **File Attachments**: Add documents and images to tasks
+- **Comments System**: Task discussions and mentions
+- **Calendar Integration**: Due date management and scheduling
+- **Dark Mode**: Theme customization options
+- **PWA Support**: Offline functionality and app installation
+- **Email Notifications**: Task assignments and deadline reminders
 
 ## 👨‍💻 Developer Notes
 
-This project was built as a technical assessment to demonstrate:
-- Modern React development skills
-- Clean architecture principles
-- Professional UI/UX implementation
-- TypeScript proficiency
-- State management expertise
+This project demonstrates modern React development with a focus on:
+- **Clean Architecture**: Well-organized component structure and separation of concerns
+- **Responsive Design**: Industry-standard mobile-first approach with simple, effective solutions
+- **State Management**: Modern Zustand implementation replacing traditional Context API
+- **TypeScript Proficiency**: Comprehensive type safety and developer experience
+- **Performance**: Efficient rendering and state updates
 
-The codebase is production-ready and follows industry best practices for maintainability and scalability.
+### Key Achievements
+- ✅ **Fully Responsive**: Separate mobile/desktop designs with proper breakpoints
+- ✅ **Search Functionality**: Real-time filtering integrated with global state
+- ✅ **Task Management**: Complete CRUD operations with data persistence
+- ✅ **Modern Architecture**: Clean, maintainable codebase following best practices
+- ✅ **Production Ready**: Optimized build with proper error handling
+
+The codebase prioritizes simplicity and maintainability while delivering professional-grade functionality suitable for production deployment.
 
 ## 📄 License
 
