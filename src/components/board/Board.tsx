@@ -313,16 +313,16 @@ const Board: React.FC = () => {
   return (
     <div className="flex flex-col h-full w-full">
       {/* Project Header Section */}
-      <div className="flex-shrink-0 px-4 md:px-8 py-4 md:py-6 bg-white border-b border-gray-200">
+      <div className="flex-shrink-0 px-3 sm:px-4 md:px-8 py-3 sm:py-4 md:py-6 bg-white border-b border-gray-200">
         {project && (
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <h1 className="text-xl font-bold text-gray-900">{project.title}</h1>
-              <span className="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full font-medium">{project.status}</span>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900">{project.title}</h1>
+              <span className="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full font-medium w-fit">{project.status}</span>
             </div>
             <p className="text-gray-600 text-sm mb-4">{project.description}</p>
             
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-gray-600">assigned</span>
@@ -346,7 +346,9 @@ const Board: React.FC = () => {
                   onEditDescription={handleEditDescription}
                   onManageMembers={handleManageMembers}
                 />
-                
+              </div>
+              
+              <div className="flex items-center gap-2">
                 <button className="p-1 text-gray-400 hover:text-gray-600">
                   <MoreHorizontal className="w-5 h-5" />
                 </button>
@@ -359,10 +361,10 @@ const Board: React.FC = () => {
       </div>
 
       {/* Mobile View */}
-      <div className="md:hidden flex-1 overflow-y-auto p-4">
-        <div className="space-y-6">
+      <div className="md:hidden flex-1 overflow-y-auto p-3 sm:p-4">
+        <div className="space-y-4 sm:space-y-6">
           {columns.map((column) => (
-            <div key={column.id} className="w-full bg-white rounded-lg border border-gray-200 p-4">
+            <div key={column.id} className="w-full bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
               <ColumnHeader
                 column={column}
                 onAddTask={handleAddTask}
