@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
       <Navbar onMenuClick={toggleSidebar} />
       <div className="flex-1 flex overflow-hidden relative">
-        {/* Mobile Overlay */}
+        {/* Mobile Overlay - positioned behind sidebar */}
         {isSidebarOpen && (
           <div 
             className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           />
         )}
         
-        {/* Sidebar */}
+        {/* Sidebar - Your Original Design */}
         <div className={`
           fixed md:relative z-30 md:z-auto
           transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
