@@ -8,13 +8,13 @@ import AddTaskModal from '../ui/AddTaskModal';
 import EditTaskModal from '../ui/EditTaskModal';
 import AssignUserModal from '../ui/AssignUserModal';
 import { MoreHorizontal } from 'lucide-react';
-import { useAppContext } from '../../contexts/AppContext';
+import { useAppStore } from '../../store/appStore';
 import { addTaskToBoard, deleteTaskFromBoard, updateTaskInBoard, assignUsersToTask, updateBoard } from '../../utils/boardStorage';
 import boardData from '../../data/boardData.json';
 import users from '../../data/users.json';
 
 const Board: React.FC = () => {
-  const { currentBoard, refreshBoards } = useAppContext();
+  const { currentBoard, refreshBoards } = useAppStore();
   const [columns, setColumns] = useState<Column[]>([]);
   const [project, setProject] = useState<any>(null);
   const [draggedTask, setDraggedTask] = useState<{taskId: string, sourceColumnId: string} | null>(null);

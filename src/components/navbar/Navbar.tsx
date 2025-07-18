@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Plus, Image, Bell, SlidersHorizontal, Menu } from 'lucide-react';
-import { useAppContext } from '../../contexts/AppContext';
+import { useAppStore } from '../../store/appStore';
 import CreateBoardModal from '../ui/CreateBoardModal';
 
 interface NavbarProps {
@@ -8,7 +8,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
-  const { createBoard } = useAppContext();
+  const { createBoard } = useAppStore();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   
   // This would typically come from your state management or props

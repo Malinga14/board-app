@@ -14,7 +14,7 @@ import {
   ChevronRight,
   X
 } from 'lucide-react';
-import { useAppContext } from '../../contexts/AppContext';
+import { useAppStore } from '../../store/appStore';
 
 interface SidebarProps {
   onClose?: () => void;
@@ -22,7 +22,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   const [isBoardsOpen, setIsBoardsOpen] = useState(true);
-  const { activeContent, setActiveContent, activeBoardId, setActiveBoardId, boards } = useAppContext();
+  const { activeContent, setActiveContent, activeBoardId, setActiveBoardId, boards } = useAppStore();
 
   const toggleBoards = () => {
     setIsBoardsOpen(!isBoardsOpen);

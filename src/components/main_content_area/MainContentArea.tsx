@@ -1,6 +1,6 @@
 import React from 'react';
 import { MoreHorizontal, Calendar as CalendarIcon, Users } from 'lucide-react';
-import { useAppContext } from '../../contexts/AppContext';
+import { useAppStore } from '../../store/appStore';
 import Dashboard from '../content/Dashboard';
 import Board from '../board/Board';
 import Messages from '../content/Messages';
@@ -13,7 +13,7 @@ interface MainContentAreaProps {
 }
 
 const MainContentArea: React.FC<MainContentAreaProps> = ({ children }) => {
-  const { activeContent, activeBoardId } = useAppContext();
+  const { activeContent, activeBoardId } = useAppStore();
 
   const getHeaderContent = () => {
     switch (activeContent) {
